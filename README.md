@@ -3,3 +3,5 @@ A collection of functions to plot vgplan results as it was a plate (equivalent g
 
 VGPlan is a GUI software to model structural grillages. This project is just a colletion of some
 functions to read the VGPlan model's results created using equivalent grillage analogy.
+
+(This code is being developed under the eXtreme Go Horse strategy - XGH)
