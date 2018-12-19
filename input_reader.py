@@ -56,7 +56,19 @@ def get_elements_data(data):
                 print 'error!'
     return elements
 
+def get_results_data(data):
+    # First : Identify load cases
+    #import pdb; pdb.set_trace()
+    results = {}
+    data_parts = data.split('CARREGAMENTO:')
+    if data_parts > 1:
+        for part in data_parts[1:]:
+            lc = part[:part.find('(GRELHA')].strip()
+            results[lc] = {}
+            # Get data in data part 
+    return results
 
+        
 
 
 def perform():
@@ -65,3 +77,4 @@ def perform():
     if isinstance(text, str):
         print get_nodes_data(text)
         print get_elements_data(text)
+        print get_results_data(text)
