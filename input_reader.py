@@ -34,6 +34,28 @@ def get_nodes_data(data):
                 print 'error!'
     return nodes
 
+def get_elements_data(data):
+    ini_text = "CARACTERISTICAS DAS BARRAS"
+    end_text = "PROPRIEDADES DAS BARRAS"
+    ini_index = data.find(ini_text)
+    node_data = data[data.find(ini_text)+len(ini_text):data.find(end_text)]
+    ini_text = "==\r\n"
+    end_text = 3 * "\r\n" + 5 * " " + "=="
+    node_data = node_data[node_data.find(ini_text)+len(ini_text):node_data.find(end_text)]
+    lines = node_data.split('\r\n')
+    elements = {}
+    for line in lines:
+        terms = line.split()
+        if len(terms) == 8:
+            try:
+                index = int(terms[0])
+                ni = int(terms[1])
+                nj = int(terms[3])
+                elements[index] = (ni, nj)
+            except:
+                print 'error!'
+    return elements
+
 
 
 
@@ -42,4 +64,4 @@ def perform():
     text = read_input_file(ifile_name)
     if isinstance(text, str):
         print get_nodes_data(text)
-
+        print get_elements_data(text)
