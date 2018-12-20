@@ -52,7 +52,7 @@ def get_elements_data(data):
             nj = int(terms[3])
             sec_type = int(terms[5])
             cosine = float(terms[7])
-            elements[index] = {'nodes':(ni, nj),'sec':sec_type, 'cos':cosine}
+            elements[index] = {'nodes':(ni, nj),'section':sec_type, 'cosine':cosine}
     return elements
 
 def get_results_data(data):
@@ -83,7 +83,6 @@ def get_results_data(data):
             start = part.find('BARRA          NO          CORTANTE')
             end = part.find('RESULTANTES NODAIS')
             lines = part[start:end].split('\r\n')
-            print "Starts at %d and ends at %d"%(start, end)
             lines = part[start:end].split('\r\n')
             iforces = {}
             for i in range(len(lines)):
@@ -109,13 +108,4 @@ def get_results_data(data):
 
     return results
 
-        
 
-
-def perform_test():
-    ifile_name = "input_files/simple_50.txt"
-    text = read_input_file(ifile_name)
-    if isinstance(text, str):
-        print get_nodes_data(text)
-        print get_elements_data(text)
-        print get_results_data(text)
