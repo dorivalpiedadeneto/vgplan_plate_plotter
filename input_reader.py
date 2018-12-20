@@ -112,7 +112,7 @@ def get_results_data(data):
         
 
 
-def perform():
+def perform_test():
     ifile_name = "input_files/simple_50.txt"
     text = read_input_file(ifile_name)
     if isinstance(text, str):
