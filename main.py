@@ -13,6 +13,8 @@ def perform_test():
         results = get_results_data(text)
         nodal_forces = compute_results(nodes, elements, results, section_data)  
         print nodal_forces
+        m = generate_mesh(nodes)
+        print m
 
 if __name__ == "__main__":
     v, sv, ssv = version()
