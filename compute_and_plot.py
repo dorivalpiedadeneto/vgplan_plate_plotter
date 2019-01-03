@@ -99,7 +99,7 @@ def compute_results(nodes, elements, results, section_data):
     return nodal_forces
 
 def generate_mesh(nodes):
-    from  matplolib.tri.triangulation import Triangulation
+    from  matplotlib.tri.triangulation import Triangulation
     x = []; y = []
     for coord in nodes.values():
         x_, y_ = coord
