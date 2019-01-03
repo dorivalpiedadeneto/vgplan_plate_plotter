@@ -11,8 +11,8 @@ def perform_test():
         nodes = get_nodes_data(text)
         elements = get_elements_data(text)
         results = get_results_data(text)
-        compute_results(nodes, elements, results, section_data)  
-
+        nodal_forces = compute_results(nodes, elements, results, section_data)  
+        print nodal_forces
 
 if __name__ == "__main__":
     v, sv, ssv = version()
