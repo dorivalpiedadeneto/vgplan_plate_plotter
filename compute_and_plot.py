@@ -98,5 +98,14 @@ def compute_results(nodes, elements, results, section_data):
 
     return nodal_forces
 
+def generate_mesh(nodes):
+    from  matplolib.tri.triangulation import Triangulation
+    x = []; y = []
+    for coord in nodes.values():
+        x_, y_ = coord
+        x.append(x_)
+        y.append(y_)
+    t = Triangulation(x, y)
+    return t.triangles
 
 
