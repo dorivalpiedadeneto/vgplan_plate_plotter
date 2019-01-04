@@ -13,8 +13,9 @@ def perform_test():
         results = get_results_data(text)
         nodal_forces = compute_results(nodes, elements, results, section_data)  
         print nodal_forces
-        m = generate_mesh(nodes)
-        print m
+        x, y, m = generate_mesh(nodes)
+        plot_mesh(x, y, m) 
+        plot_mean_value_fields(x, y, m, results, nodal_forces)
 
 if __name__ == "__main__":
     v, sv, ssv = version()

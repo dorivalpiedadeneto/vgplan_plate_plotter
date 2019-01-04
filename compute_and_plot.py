@@ -100,12 +100,25 @@ def compute_results(nodes, elements, results, section_data):
 
 def generate_mesh(nodes):
     from  matplotlib.tri.triangulation import Triangulation
+    from numpy import array
     x = []; y = []
-    for coord in nodes.values():
-        x_, y_ = coord
+    for nid in sorted(nodes.keys()):
+        x_, y_ = nodes[nid]
         x.append(x_)
         y.append(y_)
     t = Triangulation(x, y)
-    return t.triangles
+    return array(x), array(y), t.triangles
+
+def plot_mesh(x, y, mesh):
+    import matplotlib.pyplot as plt
+    fig = plt.figure(1)
+    ax = fig.add_subplot(111)
+    ax.set_aspect('equal')
+    ax.triplot(x, y, mesh, 'ko-', lw=1.0)
+    plt.show()
+
+def plot_mean_value_fields(x, y, mesh, results, nodal_forces):
+    print results
+    print nodal_forces
 
 
