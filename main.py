@@ -4,7 +4,7 @@ from input_reader import *
 from compute_and_plot import *
 
 def perform_test():
-    ifile_name = "input_files/simple_50.txt"
+    ifile_name = "input_files/simple_10.txt"
     text = read_input_file(ifile_name)
     section_data = {1:25,2:50}
     if isinstance(text, str):
@@ -12,7 +12,7 @@ def perform_test():
         elements = get_elements_data(text)
         results = get_results_data(text)
         nodal_forces = compute_results(nodes, elements, results, section_data)  
-        print nodal_forces
+        #print nodal_forces
         x, y, m = generate_mesh(nodes)
         plot_mesh(x, y, m) 
         plot_mean_value_fields(x, y, m, results, nodal_forces)

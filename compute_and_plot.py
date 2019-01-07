@@ -117,8 +117,102 @@ def plot_mesh(x, y, mesh):
     ax.triplot(x, y, mesh, 'ko-', lw=1.0)
     plt.show()
 
-def plot_mean_value_fields(x, y, mesh, results, nodal_forces):
-    print results
-    print nodal_forces
+def plot_mean_value_fields(x, y, mesh, results, nodal_forces, ndiv = 6, orientation='horizontal'):
+    from numpy import array,linspace
+    import matplotlib.pyplot as plt
 
+    # Drawing limits
+    xmax = max(x); xmin = min(x)
+    ymax= max(y); ymin = min(y)
+    dx = xmax - xmin
+    dy = ymax - ymin
+    xmax += 0.1 * dx; xmin -= 0.1 * dx
+    ymax += 0.1 * dy; ymin -= 0.1 * dy
+
+
+    #print results['P']['displacements'].keys()
+    #print nodal_forces['P']['mean'].keys()
+    fig_num = 1
+
+    for load_case in results.keys():
+        # Plotting displacement
+        disp = results[load_case]['displacements']
+        disp_val = []
+        for node, disp in disp.items():
+            #print " - Node # %d: %f"%(node, disp)
+            disp_val.append(disp)
+        min_val = min(disp_val)
+        max_val = max(disp_val)
+        if abs(max_val-min_val) < 1.0e-6:
+            lvs = [min_val - 0.1, max_val + 0.1]
+        else:
+            lvs = linspace(min_val, max_val, ndiv).tolist()
+        disp_val = array(disp_val)
+        # Creating figure
+        fig = plt.figure(fig_num)
+        ax = fig.add_subplot(111)
+        ctr = ax.tricontourf(x,y, mesh, disp_val, cmap = plt.cm.spectral)#, levels = lvs) 
+        ax.set_title('Displacement - %s'%load_case)
+        ax.set_xlim(xmin, xmax)
+        ax.set_ylim(ymin, ymax)
+        fig.colorbar(ctr, orientation=orientation)
+        fig_num += 1
+
+    for load_case in nodal_forces.keys():
+        # Plotting internal forces
+        iforces = nodal_forces[load_case]['mean']
+        v_val = []; my_val = []; mx_val = []; mxy_val = []
+        for node, iforce in iforces.items():
+            v_val.append(iforce['v'])
+            mx_val.append(iforce['mx'])
+            my_val.append(iforce['my'])
+            mxy_val.append(iforce['mxy'])
+        v_val = array(v_val)
+        mx_val = array(mx_val)
+        my_val = array(my_val)
+        mxy_val = array(mxy_val)
+        # Creating mx figure
+        fig = plt.figure(fig_num)
+        ax = fig.add_subplot(111)
+        ctr = ax.tricontourf(x,y, mesh, mx_val, cmap = plt.cm.spectral)
+        ax.set_title('mx - %s'%load_case)
+        ax.set_xlim(xmin, xmax)
+        ax.set_ylim(ymin, ymax)
+        fig.colorbar(ctr, orientation=orientation)
+        fig_num += 1
+        # Creating my figure
+        fig = plt.figure(fig_num)
+        ax = fig.add_subplot(111)
+        ctr = ax.tricontourf(x,y, mesh, my_val, cmap = plt.cm.spectral)
+        ax.set_title('my - %s'%load_case)
+        ax.set_xlim(xmin, xmax)
+        ax.set_ylim(ymin, ymax)
+        fig.colorbar(ctr, orientation=orientation)
+        fig_num += 1
+        # Creating mxy figure
+        fig = plt.figure(fig_num)
+        ax = fig.add_subplot(111)
+        ctr = ax.tricontourf(x,y, mesh, mxy_val, cmap = plt.cm.spectral)
+        ax.set_title('mxy - %s'%load_case)
+        ax.set_xlim(xmin, xmax)
+        ax.set_ylim(ymin, ymax)
+        fig.colorbar(ctr, orientation=orientation)
+        fig_num += 1
+        # Creating v figure
+        fig = plt.figure(fig_num)
+        ax = fig.add_subplot(111)
+        ctr = ax.tricontourf(x,y, mesh, v_val, cmap = plt.cm.spectral)
+        ax.set_title('v - %s'%load_case)
+        ax.set_xlim(xmin, xmax)
+        ax.set_ylim(ymin, ymax)
+        fig.colorbar(ctr, orientation=orientation)
+        fig_num += 1
+
+
+
+
+       
+
+
+    plt.show()
 
